@@ -1,11 +1,10 @@
 # Complex VWAP theo and stop-and-reverse backtest
 
-Interactive charts of order book snapshots and trades, with our theo (complex VWAP), the mid, the strategy's fills, and its cumulative PnL underneath.
+Interactive chart of order book snapshots and trades, with our theo (complex VWAP), the mid, the strategy's fills, and its cumulative PnL underneath.
 
-- `index.html` is dataset 1 (`vwap_workshop_books.csv`, `vwap_workshop_trades.csv`).
-- `set2.html` is dataset 2 (`vwap_workshop_books_set2.csv`, `vwap_workshop_trades_set2.csv`).
+- `index.html` shows the strategy on dataset 2 (`vwap_workshop_books_set2.csv`, `vwap_workshop_trades_set2.csv`).
 
-Each page is a single HTML file with its data embedded. Open it in a browser, no install needed.
+The page is a single HTML file with its data embedded. Open it in a browser, no install needed.
 
 ## Part 1: The theo
 
@@ -56,23 +55,22 @@ With a margin limit of £5000, we would have to reduce our total exposure. This 
 
 | Dataset | Trades | Lots traded | Partial fills | Final PnL | Max drawdown |
 |---|---|---|---|---|---|
-| Set 1 (`index.html`) | 4 | 60 | 1 | 0.00 | -1.25 |
-| Set 2 (`set2.html`) | 7 | 110 | 1 | +0.25 | -1.50 |
+| Set 2 (`index.html`) | 7 | 110 | 1 | +0.25 | -1.50 |
 
 PnL is in price x lots.
 
 ## Caveats
 
-- The trade files give only the interval between two snapshots, so market trades are spaced evenly inside their interval in sequence order. That spacing only affects where they sit on the chart.
+- The trade file gives only the interval between two snapshots, so market trades are spaced evenly inside their interval in sequence order. That spacing only affects where they sit on the chart.
 - Only the touch is tradable in the simulation; deeper levels are not swept.
 - No fees in the backtest. The edge-based rule with fees in Part 3 is a proposed extension; the implemented signal is theo vs mid.
-- Pages load Plotly from a CDN, so they need an internet connection to render.
+- The page loads Plotly from a CDN, so it needs an internet connection to render.
 
-## Reproducing
+## Code
+
+`src/vwap_backtest.py` contains the theo calculation and the backtest, and `src/plot_backtest.py` builds the chart. To re-run the backtest and rebuild the charts:
 
 ```bash
 pip install -r requirements.txt
-python run_all.py   # regenerates index.html and set2.html from data/
+python run_all.py
 ```
-
-Code is in `src/`: `vwap_backtest.py` (theo and backtest) and `plot_backtest.py` (charts).
